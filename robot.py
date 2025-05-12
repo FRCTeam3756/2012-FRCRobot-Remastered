@@ -11,10 +11,6 @@ import phoenix5
 
 class MyRobot(wpilib.TimedRobot):
     def robotInit(self):
-        """
-        This function is called upon program startup and
-        should be used for any initialization code.
-        """
         self.leftDriveLeader = phoenix5.TalonSRX(6)
         self.leftDriveFront = phoenix5.TalonSRX(5)
         self.leftDriveBack = phoenix5.TalonSRX(4)
@@ -35,15 +31,10 @@ class MyRobot(wpilib.TimedRobot):
         self.rightDriveLeader.setInverted(True)
 
     def autonomousInit(self):
-        """This function is run once each time the robot enters autonomous mode."""
         self.timer.restart()
 
     def autonomousPeriodic(self):
-        """This function is called periodically during autonomous."""
-
-        # Drive for two seconds
         if self.timer.get() < 2.0:
-            # Drive forwards half speed, make sure to turn input squaring off
             self.leftDriveLeader.set(phoenix5.TalonSRXControlMode.MotionMagic, 0.5)
             self.rightDriveLeader.set(phoenix5.TalonSRXControlMode.MotionMagic, 0.5)
         else:
@@ -51,10 +42,9 @@ class MyRobot(wpilib.TimedRobot):
             self.rightDriveLeader.set(phoenix5.TalonSRXControlMode.MotionMagic, 0.0)
 
     def teleopInit(self):
-        """This function is called once each time the robot enters teleoperated mode."""
+        pass
 
     def teleopPeriodic(self):
-        """This function is called periodically during teleoperated mode."""
         self.leftDriveLeader.set(phoenix5.TalonSRXControlMode.MotionMagic, 0.5)
         self.rightDriveLeader.set(phoenix5.TalonSRXControlMode.MotionMagic, 0.5)
 

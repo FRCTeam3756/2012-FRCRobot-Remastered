@@ -1,3 +1,0 @@
-python -m robotpy sync
-
-python -m robotpy deploy --skip-tests
