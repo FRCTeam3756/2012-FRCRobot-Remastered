@@ -3,32 +3,16 @@
 # the license viewable in the root directory of this project.
 
 from wpilib import XboxController, Timer, TimedRobot
-from phoenix5 import TalonSRX, TalonSRXControlMode
+
+from subsystems.drive_subsystem import DriveSubsystem
+from robot_container import RobotContainer
 
 class MyRobot(TimedRobot):
-    def robotInit(self):
-        self.enterWheel = TalonSRX(7)
-        self.exitWheel = TalonSRX(8)
+    def __init__(self):
+        self.robotContainer = RobotContainer()
+        self.driveSubsystem = DriveSubsystem()
 
-        self.leftDriveLeader = TalonSRX(6)
-        self.leftDriveFront = TalonSRX(5)
-        self.leftDriveBack = TalonSRX(4)
-
-        self.rightDriveLeader = TalonSRX(1)
-        self.rightDriveFront = TalonSRX(2)
-        self.rightDriveBack = TalonSRX(3)
-
-        self.leftDriveLeader.setInverted(True)
-        self.leftDriveFront.setInverted(True)
-        self.leftDriveBack.setInverted(True)
-
-        self.leftDriveFront.follow(self.leftDriveLeader)
-        self.leftDriveBack.follow(self.leftDriveLeader)
-
-        self.rightDriveFront.follow(self.rightDriveLeader)
-        self.rightDriveBack.follow(self.rightDriveLeader)
-        
-
+    def robotInit(self):        
         self.controller = XboxController(0)
         self.timer = Timer()
 
@@ -36,12 +20,13 @@ class MyRobot(TimedRobot):
         self.timer.restart()
 
     def autonomousPeriodic(self):
-        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
-        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
+        self.driveSubsystem.drive(1.0, 0.0)
 
     def teleopInit(self):
         pass
 
     def teleopPeriodic(self):
-        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
-        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
+        self.driveSubsystem.drive(
+            self.controller.getLeftX(),
+            self.controller.getLeftY()
+        )
