@@ -7,6 +7,9 @@ from phoenix5 import TalonSRX, TalonSRXControlMode
 
 class MyRobot(TimedRobot):
     def robotInit(self):
+        self.enterWheel = TalonSRX(7)
+        self.exitWheel = TalonSRX(8)
+
         self.leftDriveLeader = TalonSRX(6)
         self.leftDriveFront = TalonSRX(5)
         self.leftDriveBack = TalonSRX(4)
@@ -15,31 +18,30 @@ class MyRobot(TimedRobot):
         self.rightDriveFront = TalonSRX(2)
         self.rightDriveBack = TalonSRX(3)
 
+        self.leftDriveLeader.setInverted(True)
+        self.leftDriveFront.setInverted(True)
+        self.leftDriveBack.setInverted(True)
+
         self.leftDriveFront.follow(self.leftDriveLeader)
         self.leftDriveBack.follow(self.leftDriveLeader)
 
         self.rightDriveFront.follow(self.rightDriveLeader)
         self.rightDriveBack.follow(self.rightDriveLeader)
+        
 
         self.controller = XboxController(0)
         self.timer = Timer()
-
-        self.rightDriveLeader.setInverted(True)
 
     def autonomousInit(self):
         self.timer.restart()
 
     def autonomousPeriodic(self):
-        if self.timer.get() < 2.0:
-            self.leftDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.5)
-            self.rightDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.5)
-        else:
-            self.leftDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.0)
-            self.rightDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.0)
+        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
+        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
 
     def teleopInit(self):
         pass
 
     def teleopPeriodic(self):
-        self.leftDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.5)
-        self.rightDriveLeader.set(TalonSRXControlMode.MotionMagic, 0.5)
+        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
+        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, 1.0)
