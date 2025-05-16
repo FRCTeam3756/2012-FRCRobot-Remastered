@@ -9,13 +9,13 @@ class DriveSubsystem(Subsystem):
     def __init__(self):
         super().__init__()
 
-        self.leftDriveLeader = TalonSRX(6)
-        self.leftDriveFront = TalonSRX(5)
-        self.leftDriveBack = TalonSRX(4)
+        self.leftDriveLeader = TalonSRX(1)
+        self.leftDriveFront = TalonSRX(2)
+        self.leftDriveBack = TalonSRX(3)
 
-        self.rightDriveLeader = TalonSRX(1)
-        self.rightDriveFront = TalonSRX(2)
-        self.rightDriveBack = TalonSRX(3)
+        self.rightDriveLeader = TalonSRX(4)
+        self.rightDriveFront = TalonSRX(5)
+        self.rightDriveBack = TalonSRX(6)
 
         self.leftDriveLeader.setInverted(True)
         self.leftDriveFront.setInverted(True)
@@ -36,4 +36,4 @@ class DriveSubsystem(Subsystem):
     
     @staticmethod
     def compute_turn(xInput: float, isLeft: bool) -> float:
-        return ((math.cos((((0.5 if isLeft else -0.5) * math.pi) * xInput) - (0.5 * math.pi)) + 1) / 2) * DriveConstants.MAX_SPEED
+        return (0.5 * (math.cos((xInput if isLeft else -xInput) * (math.pi * 0.5) - (math.pi * 0.5)) + 1))

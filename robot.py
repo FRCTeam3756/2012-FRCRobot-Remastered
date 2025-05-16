@@ -9,6 +9,8 @@ from robot_container import RobotContainer
 
 class MyRobot(TimedRobot):
     def __init__(self):
+        super().__init__()
+
         self.robotContainer = RobotContainer()
         self.driveSubsystem = DriveSubsystem()
 
@@ -20,7 +22,7 @@ class MyRobot(TimedRobot):
         self.timer.restart()
 
     def autonomousPeriodic(self):
-        self.driveSubsystem.drive(1.0, 0.0)
+        self.driveSubsystem.drive(0.0, 1.0)
 
     def teleopInit(self):
         pass
