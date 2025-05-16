@@ -36,4 +36,4 @@ class DriveSubsystem(Subsystem):
     
     @staticmethod
     def compute_turn(xInput: float, isLeft: bool) -> float:
-        return (0.5 * (math.cos((xInput if isLeft else -xInput) * (math.pi * 0.5) - (math.pi * 0.5)) + 1))
+        return (math.sin((xInput if isLeft else -xInput * math.pi) / 2) + 1) / 2
