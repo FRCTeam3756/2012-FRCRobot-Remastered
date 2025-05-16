@@ -5,8 +5,10 @@ from phoenix5 import TalonSRX, TalonSRXControlMode
 
 from constants.drive_constants import DriveConstants
 
+#############################################################
+
 class DriveSubsystem(Subsystem):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.leftDriveLeader = TalonSRX(1)
