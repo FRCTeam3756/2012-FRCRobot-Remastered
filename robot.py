@@ -5,6 +5,7 @@
 from wpilib import XboxController, Timer, TimedRobot
 
 from subsystems.drive_subsystem import DriveSubsystem
+from subsystems.camera_subsystem import CameraSubsystem
 from robot_container import RobotContainer
 
 class MyRobot(TimedRobot):
@@ -17,6 +18,10 @@ class MyRobot(TimedRobot):
     def robotInit(self):        
         self.controller = XboxController(0)
         self.timer = Timer()
+        self.camera = CameraSubsystem()
+
+    def robotPeriodic(self):
+        self.camera.update_feed()
 
     def autonomousInit(self):
         self.timer.restart()
