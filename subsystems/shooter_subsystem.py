@@ -9,10 +9,10 @@ class ShooterSubsystem(Subsystem):
         self.enterWheel = TalonSRX(7)
         self.exitWheel = TalonSRX(8)
 
-    def intake(self, speed: float) -> None:
+    def shooterIntake(self, speed: float) -> None:
         self.exitWheel.set(TalonSRXControlMode.PercentOutput, -speed)
         self.enterWheel.set(TalonSRXControlMode.PercentOutput, -speed)
 
-    def outtake(self, speed: float) -> None:
+    def shooterOuttake(self, speed: float) -> None:
         self.exitWheel.set(TalonSRXControlMode.PercentOutput, speed)
         self.enterWheel.set(TalonSRXControlMode.PercentOutput, speed)

@@ -1,23 +1,29 @@
 from commands2 import Subsystem
-from wpilib import Solenoid, PneumaticsModuleType, Compressor
+from wpilib import DoubleSolenoid, PneumaticsModuleType, Compressor
 from phoenix5 import TalonSRX, TalonSRXControlMode
 
 class IntakeSubsystem(Subsystem):
     def __init__(self) -> None:
         super().__init__()
         self.intakeMotor = TalonSRX(9)
-        self.solenoid = Solenoid(9, PneumaticsModuleType.CTREPCM)
-        self.compressor = Compressor(0, PneumaticsModuleType.CTREPCM)
+        self.solenoid = DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1)
+        self.compressor = Compressor(PneumaticsModuleType.CTREPCM, 0)
         self.compressor.enableDigital()
 
-    def intake(self) -> None:
+    def intakeBand(self) -> None:
         self.intakeMotor.set(TalonSRXControlMode.PercentOutput, 1.0)
 
-    def outtake(self) -> None:
+    def outtakeBand(self) -> None:
         self.intakeMotor.set(TalonSRXControlMode.PercentOutput, -1.0)
 
-    def up(self) -> None:
-        self.solenoid.set(on=True)
+    def stopBand(self) -> None:
+        self.intakeMotor
 
-    def down(self) -> None:
-        self.solenoid.set(on=False)
+    def armUp(self) -> None:
+        self.solenoid.set(DoubleSolenoid.Value.kReverse)
+
+    def armDown(self) -> None:
+        self.solenoid.set(DoubleSolenoid.Value.kForward)
+
+    def armStop(self) -> None:
+        self.solenoid.set(DoubleSolenoid.Value.kOff)
