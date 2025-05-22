@@ -30,12 +30,12 @@ class DriveSubsystem(Subsystem):
         self.rightDriveBack.follow(self.rightDriveLeader)
 
     def drive(self, xInput: float, yInput: float) -> None:
-        left_speed = yInput * self.compute_turn(xInput, isLeft=True) * DriveConstants.MAX_SPEED
-        right_speed = yInput * self.compute_turn(xInput, isLeft=False) * DriveConstants.MAX_SPEED
+        leftSpeed = yInput * self.computeTurn(xInput, isLeft=True) * DriveConstants.MAX_SPEED
+        rightSpeed = yInput * self.computeTurn(xInput, isLeft=False) * DriveConstants.MAX_SPEED
 
-        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, left_speed)
-        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, right_speed)
+        self.leftDriveLeader.set(TalonSRXControlMode.PercentOutput, leftSpeed)
+        self.rightDriveLeader.set(TalonSRXControlMode.PercentOutput, rightSpeed)
     
     @staticmethod
-    def compute_turn(xInput: float, isLeft: bool) -> float:
+    def computeTurn(xInput: float, isLeft: bool) -> float:
         return (math.sin((xInput if isLeft else -xInput * math.pi) / 2) + 1) / 2

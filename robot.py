@@ -2,37 +2,37 @@
 # Open Source Software; you can modify and/or share it under the terms of
 # the license viewable in the root directory of this project.
 
-from wpilib import XboxController, Timer, TimedRobot
+from wpilib import TimedRobot
 
-from subsystems.drive_subsystem import DriveSubsystem
-from subsystems.camera_subsystem import CameraSubsystem
 from robot_container import RobotContainer
+from camera import Camera
 
 #############################################################
 
 class MyRobot(TimedRobot):
     def __init__(self) -> None:
         super().__init__()
-
         self.robotContainer = RobotContainer()
-        self.driveSubsystem = DriveSubsystem()
+        self.camera = Camera()
 
-    def robotInit(self) -> None:        
-        self.controller = XboxController(0)
-        self.timer = Timer()
-        self.camera = CameraSubsystem()
+    def robotInit(self) -> None:
+        pass
 
     def robotPeriodic(self) -> None:
-        self.camera.update_feed()
+        self.camera.updateFeed()
 
     def autonomousInit(self) -> None:
-        self.timer.restart()
+        self.autonomousCommand = self.robotContainer.getAutonomousCommand()
+
+        if self.autonomousCommand:
+            self.autonomousCommand.schedule()
 
     def autonomousPeriodic(self) -> None:
-        self.driveSubsystem.drive(0.0, 1.0)
+        pass
 
     def teleopInit(self) -> None:
-        pass
+        if self.autonomousCommand:
+            self.autonomousCommand.cancel()
 
     def teleopPeriodic(self) -> None:
         self.driveSubsystem.drive(
